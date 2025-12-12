@@ -1,0 +1,10 @@
+^C:\PROJECTS--\DAS_F1(FALLBACK)\DSA_F1\BACKEND\BUILD\CMAKEFILES\49760023C53E16D84C330BE24AFB74BE\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Projects--/das_f1(fallback)/dsa_f1/backend -BC:/Projects--/das_f1(fallback)/dsa_f1/backend/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Projects--/das_f1(fallback)/dsa_f1/backend/build/GigaSafeBackend.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

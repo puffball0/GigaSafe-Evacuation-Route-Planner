@@ -1,0 +1,281 @@
+/* Reusable visual styles are loaded from VisualizationPage.css (imported in the TSX).
+   This file focuses on HashMap-specific visuals but keeps the look & layout consistent
+   with the visualization page. */
+
+.hashmap-container {
+    padding: 1rem;
+}
+
+/* Make sidebar wider */
+.viz-sidebar {
+    width: 320px !important;
+    min-width: 320px !important;
+}
+
+/* Flex utility classes for icons */
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.gap-1 {
+    gap: 0.25rem;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+.gap-4 {
+    gap: 1rem;
+}
+
+/* Icon sizes */
+.h-4 {
+    height: 1rem;
+}
+
+.w-4 {
+    width: 1rem;
+}
+
+.h-5 {
+    height: 1.25rem;
+}
+
+.w-5 {
+    width: 1.25rem;
+}
+
+/* Spin animation for loading */
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Keep explanation box look consistent with visualization styles */
+.explanation-box {
+    background: linear-gradient(135deg, oklch(0.17 0 0) 0%, oklch(0.19 0 0) 100%);
+    border-radius: var(--radius);
+    padding: 1rem;
+    border: 1px solid oklch(0.25 0 0);
+    color: white;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Step badges */
+.explanation-box .step-number {
+    background: linear-gradient(135deg, oklch(0.65 0.22 264.376) 0%, oklch(0.6 0.2 270) 100%);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    color: white;
+}
+
+.explanation-box .step-description {
+    color: oklch(0.75 0 0);
+}
+
+/* Hash map area */
+.hashmap-visualization {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 380px;
+    overflow-x: auto;
+    padding: 1rem;
+}
+
+/* Each bucket column uses the same width as visualization cards (keeps alignment) */
+.bucket-column {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    width: 120px;
+    min-height: 320px;
+    position: relative;
+    padding-bottom: 60px;
+    gap: 0.5rem;
+}
+
+/* Bucket base style */
+.bucket-base {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 58px;
+    background: linear-gradient(135deg, oklch(0.17 0 0) 0%, oklch(0.15 0 0) 100%);
+    border: 1px solid oklch(0.22 0 0);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: all 0.25s ease;
+}
+
+.bucket-base.active-bucket {
+    background: linear-gradient(135deg, oklch(0.73 0.247 27.325) 0%, oklch(0.65 0.25 25) 100%);
+    border-color: rgba(255, 170, 0, 0.9);
+    box-shadow: 0 6px 18px rgba(255, 170, 0, 0.15);
+}
+
+.bucket-base.collision-bucket {
+    background: linear-gradient(135deg, oklch(0.396 0.141 25.723) 0%, oklch(0.35 0.15 25) 100%);
+    border-color: rgba(255, 64, 129, 0.9);
+    box-shadow: 0 6px 18px rgba(255, 64, 129, 0.12);
+}
+
+.bucket-number {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: white;
+}
+
+.bucket-label {
+    font-size: 0.7rem;
+    color: oklch(0.75 0 0);
+}
+
+/* Chain nodes */
+.chain-node {
+    width: 88%;
+    background: oklch(0.15 0 0);
+    border: 1px solid oklch(0.22 0 0);
+    padding: 6px 8px;
+    border-radius: 6px;
+    text-align: center;
+    z-index: 5;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    animation: slideIn 0.36s ease-out;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.chain-node .node-id {
+    font-weight: 700;
+    color: white;
+}
+
+.chain-node .node-name {
+    font-size: 0.78rem;
+    color: oklch(0.75 0 0);
+}
+
+/* highlight styles */
+.chain-node.inserted-node {
+    background: linear-gradient(135deg, oklch(0.17 0 0) 0%, oklch(0.12 0 0) 100%);
+    border-color: rgba(16, 185, 129, 0.9);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.08);
+}
+
+.chain-node.active-chain {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(59, 130, 246, 0.06);
+}
+
+/* arrow */
+.chain-arrow {
+    margin-top: 6px;
+    font-weight: 700;
+    color: oklch(0.65 0 0);
+}
+
+/* small responsive tweaks */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Sidebar chips (reuse viz classes with small additions) */
+.path-node {
+    padding: 0.4rem 0.8rem;
+    border-radius: calc(var(--radius) - 2px);
+    font-weight: 600;
+    font-size: 0.9rem;
+    background: linear-gradient(135deg, oklch(0.65 0.22 264.376) 0%, oklch(0.6 0.2 270) 100%);
+    color: white;
+}
+
+.path-node.exit-node {
+    background: linear-gradient(135deg, oklch(0.73 0.247 27.325) 0%, oklch(0.65 0.25 25) 100%);
+    box-shadow: 0 6px 14px rgba(239, 68, 68, 0.12);
+}
+
+/* Search-specific styles */
+.chain-node.search-match {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(16, 185, 129, 0.15)) !important;
+    border-color: rgba(34, 197, 94, 0.7) !important;
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.12);
+    animation: searchMatchPulse 2s infinite;
+}
+
+.bucket-base.search-bucket {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.95), rgba(79, 70, 229, 0.95)) !important;
+    border-color: rgba(99, 102, 241, 0.9) !important;
+    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.15);
+}
+
+@keyframes searchMatchPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 8px 20px rgba(34, 197, 94, 0.12);
+        transform: translateY(0);
+    }
+
+    50% {
+        box-shadow: 0 12px 28px rgba(34, 197, 94, 0.2);
+        transform: translateY(-4px);
+    }
+}
+
+/* Make path-info sections in sidebar wider */
+.path-info {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .viz-sidebar {
+        width: 300px !important;
+        min-width: 300px !important;
+    }
+}
+
+@media (max-width: 1000px) {
+    .viz-sidebar {
+        width: 280px !important;
+        min-width: 280px !important;
+    }
+}

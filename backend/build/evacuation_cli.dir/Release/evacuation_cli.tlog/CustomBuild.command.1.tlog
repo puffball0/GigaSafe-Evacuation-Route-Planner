@@ -1,0 +1,10 @@
+^C:\PROJECTS--\DSA_F1(FALLBACK)(VISUALIZATION1)\F_DSA_F0 - COPY(ALL ALGOS) - COPY(FFF)\DSA_F1\BACKEND\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Projects--/dsa_f1(fallback)(visualization1)/f_dsa_f0 - Copy(all algos) - Copy(fff)/dsa_f1/backend" "-BC:/Projects--/dsa_f1(fallback)(visualization1)/f_dsa_f0 - Copy(all algos) - Copy(fff)/dsa_f1/backend/build" --check-stamp-file "C:/Projects--/dsa_f1(fallback)(visualization1)/f_dsa_f0 - Copy(all algos) - Copy(fff)/dsa_f1/backend/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

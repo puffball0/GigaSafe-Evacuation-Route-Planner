@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\Graph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\groundfloor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\firstfloor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\secondfloor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\lowergroundfloor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\mezzaninefloor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\floor2a.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\algorithms\Dijkstra.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\algorithms\BFS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\algorithms\DFS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\algorithms\AStar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\visualization\visualizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\datastructures\HashMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{59D1E73A-7084-3584-B035-90860CC7B989}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

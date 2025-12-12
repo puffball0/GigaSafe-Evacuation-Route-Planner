@@ -1,0 +1,10 @@
+^C:\PROJECTS--\DAS_F1(FALLBACK)\DSA_F1\BACKEND\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Projects--/das_f1(fallback)/dsa_f1/backend -BC:/Projects--/das_f1(fallback)/dsa_f1/backend/build --check-stamp-file C:/Projects--/das_f1(fallback)/dsa_f1/backend/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
