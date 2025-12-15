@@ -3,7 +3,7 @@
 ## TO RUN THE PROJECT
 
 ### 1. Run Integration (For Backend):
-Open a terminal and run:
+Open a terminal/Powershell and run:
 
 ```bash
 cd integration
@@ -13,8 +13,9 @@ npm start
 
 
 ### 2. Run Frontend:
-Open another terminal and run:
+Open another terminal/Powershell and run:
 ```bash
 cd frontend
 npm run dev
 ```
+
