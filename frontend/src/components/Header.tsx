@@ -55,11 +55,9 @@ import './Header.css';
 interface HeaderProps {
   currentPage: Page;
   onNavigate: (page: Page) => void;
-  isDark: boolean;
-  onToggleTheme: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate, isDark, onToggleTheme }) => {
+const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
   return (
     <header className="app-header">
       <div className="header-content">
@@ -95,9 +93,6 @@ const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate, isDark, onTogg
             className={`nav-button ${currentPage === 'hashmap' ? 'active' : ''}`}
           >
             HashMap
-          </button>
-          <button onClick={onToggleTheme} className="theme-toggle">
-            {isDark ? '☀️' : '🌙'}
           </button>
         </nav>
       </div>

@@ -50,16 +50,13 @@ import './App.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
-  const [isDark, setIsDark] = useState<boolean>(true);
 
   return (
-    <div className={isDark ? 'dark' : ''}>
+    <div className="dark">
       <div className="min-h-screen bg-background text-foreground">
         <Header
           currentPage={currentPage}
           onNavigate={setCurrentPage}
-          isDark={isDark}
-          onToggleTheme={() => setIsDark(!isDark)}
         />
 
         <main>

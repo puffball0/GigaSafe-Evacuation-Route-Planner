@@ -22,7 +22,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8C76D67C-1907-3EF6-8DE3-1C1F73037FF3}</ProjectGuid>
+    <ProjectGuid>{3B7CED43-FFC6-3E2E-8409-C6F3DD30153E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
     <Platform>x64</Platform>
@@ -125,7 +125,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\build\CMakeFiles\8ee98de84a429a37f28b225ade1ef9a1\INSTALL_force.rule">
+    <CustomBuild Include="C:\Users\warda\Downloads\GigaSafe-Evacuation-Route-Planner-main\GigaSafe-Evacuation-Route-Planner-main\backend\build\CMakeFiles\0e33f90701bf6de27460c04b5dc2d1e1\INSTALL_force.rule">
       <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> </Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
@@ -138,7 +138,7 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\build\CMakeFiles\INSTALL_force</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\warda\Downloads\GigaSafe-Evacuation-Route-Planner-main\GigaSafe-Evacuation-Route-Planner-main\backend\build\CMakeFiles\INSTALL_force</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
       <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</VerifyInputsAndOutputsExist>
       <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BuildInParallel>
@@ -153,7 +153,7 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\build\CMakeFiles\INSTALL_force</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\warda\Downloads\GigaSafe-Evacuation-Route-Planner-main\GigaSafe-Evacuation-Route-Planner-main\backend\build\CMakeFiles\INSTALL_force</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
       <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</VerifyInputsAndOutputsExist>
       <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</BuildInParallel>
@@ -168,7 +168,7 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\build\CMakeFiles\INSTALL_force</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\warda\Downloads\GigaSafe-Evacuation-Route-Planner-main\GigaSafe-Evacuation-Route-Planner-main\backend\build\CMakeFiles\INSTALL_force</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
       <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</VerifyInputsAndOutputsExist>
       <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</BuildInParallel>
@@ -183,21 +183,21 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\build\CMakeFiles\INSTALL_force</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\warda\Downloads\GigaSafe-Evacuation-Route-Planner-main\GigaSafe-Evacuation-Route-Planner-main\backend\build\CMakeFiles\INSTALL_force</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
       <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</VerifyInputsAndOutputsExist>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\build\ZERO_CHECK.vcxproj">
-      <Project>{8A6B303B-7BA1-386E-BAEC-9A2FD464D262}</Project>
+    <ProjectReference Include="C:\Users\warda\Downloads\GigaSafe-Evacuation-Route-Planner-main\GigaSafe-Evacuation-Route-Planner-main\backend\build\ZERO_CHECK.vcxproj">
+      <Project>{FAF76F97-0FD9-3865-B048-6523467EC492}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\build\ALL_BUILD.vcxproj">
-      <Project>{C9971CCD-2737-3DD1-9E64-51306FDDBD7B}</Project>
+    <ProjectReference Include="C:\Users\warda\Downloads\GigaSafe-Evacuation-Route-Planner-main\GigaSafe-Evacuation-Route-Planner-main\backend\build\ALL_BUILD.vcxproj">
+      <Project>{FBD594E0-1D0C-398A-8946-FFCBAB00E845}</Project>
       <Name>ALL_BUILD</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

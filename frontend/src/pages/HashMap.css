@@ -98,12 +98,32 @@
 /* Hash map area */
 .hashmap-visualization {
     display: flex;
-    gap: 1rem;
-    justify-content: center;
-    align-items: flex-end;
-    min-height: 380px;
+    justify-content: flex-start;
+    /* Changed from center to allow scrolling start */
+    gap: 1.5rem;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    min-height: 400px;
     overflow-x: auto;
-    padding: 1rem;
+    /* Enable horizontal scrolling */
+    width: 100%;
+    /* Ensure it takes full width */
+    padding-bottom: 60px;
+    /* Added based on instruction */
+}
+
+/* Ensure buckets don't shrink */
+.bucket-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    min-width: 60px;
+    /* Enforce minimum width */
+    flex-shrink: 0;
+    /* Prevent shrinking */
 }
 
 /* Each bucket column uses the same width as visualization cards (keeps alignment) */
@@ -111,11 +131,14 @@
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
-    width: 120px;
+    width: 90px;
+    /* Increased from 70px */
+    min-width: 90px;
+    /* Increased from 70px */
     min-height: 320px;
     position: relative;
-    padding-bottom: 60px;
-    gap: 0.5rem;
+    padding-bottom: 50px;
+    gap: 0.35rem;
 }
 
 /* Bucket base style */
@@ -123,10 +146,11 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 58px;
+    height: 44px;
+    /* Increased slightly */
     background: linear-gradient(135deg, oklch(0.17 0 0) 0%, oklch(0.15 0 0) 100%);
     border: 1px solid oklch(0.22 0 0);
-    border-radius: 8px;
+    border-radius: 6px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -147,31 +171,39 @@
     box-shadow: 0 6px 18px rgba(255, 64, 129, 0.12);
 }
 
+/* ... existing active/collision styles ... */
+
 .bucket-number {
-    font-size: 1.05rem;
+    font-size: 0.9rem;
+    /* Reduced font size */
     font-weight: 700;
     color: white;
 }
 
 .bucket-label {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
+    /* Reduced font size */
     color: oklch(0.75 0 0);
+    display: none;
+    /* Hide label to save space if needed, or keep small */
 }
 
 /* Chain nodes */
 .chain-node {
-    width: 88%;
+    width: 90%;
+    /* Use almost full width of column */
     background: oklch(0.15 0 0);
     border: 1px solid oklch(0.22 0 0);
-    padding: 6px 8px;
-    border-radius: 6px;
+    padding: 4px 2px;
+    /* Reduced padding */
+    border-radius: 4px;
     text-align: center;
     z-index: 5;
     transition: transform 0.18s ease, box-shadow 0.18s ease;
     animation: slideIn 0.36s ease-out;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
 }
 
 .chain-node .node-id {

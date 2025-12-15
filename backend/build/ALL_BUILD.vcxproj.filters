@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\warda\Downloads\GigaSafe-Evacuation-Route-Planner-main\GigaSafe-Evacuation-Route-Planner-main\backend\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
