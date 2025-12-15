@@ -34,10 +34,10 @@ void GraphHashMap::insertWithSteps(const Node& node, std::vector<HashMapState>& 
     history.push_back(hashStep);
 
     // Get the current chain state for the *next* step (Pre-Insertion)
-    std::vector<ChainLink> initialChainState; // MODIFIED: Use ChainLink
+    std::vector<int> initialChainState; 
     HashNode* temp = buckets[index];
     while (temp) {
-        initialChainState.push_back({temp->id, temp->name}); // MODIFIED: Push ChainLink object
+        initialChainState.push_back(temp->id); 
         temp = temp->next;
     }
 
@@ -74,7 +74,7 @@ void GraphHashMap::insertWithSteps(const Node& node, std::vector<HashMapState>& 
     linkedStep.chainState.clear();
     temp = buckets[index];
     while (temp) {
-        linkedStep.chainState.push_back({temp->id, temp->name}); // MODIFIED: Push ChainLink object
+        linkedStep.chainState.push_back(temp->id);
         temp = temp->next;
     }
     linkedStep.description = "Result: " + node.name + " successfully inserted into bucket " + std::to_string(index) + ".";

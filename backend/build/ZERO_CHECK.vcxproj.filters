@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="C:\Projects--\dsa_f1(fallback)(visualization1)\f_dsa_f0 - Copy(all algos) - Copy(fff)\dsa_f1\backend\build\CMakeFiles\8ee98de84a429a37f28b225ade1ef9a1\generate.stamp.rule">
+    <CustomBuild Include="C:\Users\warda\Downloads\GigaSafe-Evacuation-Route-Planner-main\GigaSafe-Evacuation-Route-Planner-main\backend\build\CMakeFiles\0e33f90701bf6de27460c04b5dc2d1e1\generate.stamp.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{DC13E7C5-059C-3164-9978-626731E38943}</UniqueIdentifier>
+      <UniqueIdentifier>{45D5B7AC-2C4A-39FC-9100-C83BA77EF72C}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

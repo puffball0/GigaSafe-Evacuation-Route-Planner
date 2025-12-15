@@ -127,29 +127,73 @@ const HashMapPage: React.FC<HashMapPageProps> = ({ onBack }) => {
     const totalSteps = hashMapData?.steps.length || 0;
 
     const bucketChains = useMemo(() => {
-        const chains: number[][] = Array.from({ length: bucketCount }, () => []);
+        const chains: ChainNode[][] = Array.from({ length: bucketCount }, () => []);
         if (!hashMapData) return chains;
 
         for (let i = 0; i <= currentStepIndex && i < hashMapData.steps.length; i++) {
             const step = hashMapData.steps[i];
+
+            // Backend now returns chainState as array of objects {id, name}
             if (Array.isArray(step.chainState) && typeof step.currentBucketIndex === 'number') {
                 try {
-                    chains[step.currentBucketIndex] = (step.chainState as unknown as number[]).slice();
+                    // Check if it's the new format (objects) or old format (numbers - though we changed backend)
+                    // Safe cast to any to check structure
+                    const rawChain = step.chainState as any[];
+                    if (rawChain.length > 0 && typeof rawChain[0] === 'object') {
+                        chains[step.currentBucketIndex] = rawChain.map((node: any) => ({
+                            id: node.id,
+                            name: node.name
+                        }));
+                    } else {
+                        // Fallback for number[] if somehow mixed (shouldn't happen with new backend)
+                        chains[step.currentBucketIndex] = (rawChain as number[]).map(id => ({
+                            id,
+                            name: nodeMap.get(id) || `Node ${id}`
+                        }));
+                    }
                 } catch {
                     // ignore malformed chainState
                 }
-            } else if (step.insertedNodeId != null && typeof step.currentBucketIndex === 'number') {
+            }
+            // Handle single insertions if chainState is empty/missing but node inserted
+            else if (step.insertedNodeId != null && typeof step.currentBucketIndex === 'number') {
                 const id = step.insertedNodeId;
-                chains[step.currentBucketIndex] = [id, ...chains[step.currentBucketIndex].filter(x => x !== id)];
+                const name = step.insertedNodeName || nodeMap.get(id) || `Node ${id}`;
+                // Add to front if not exists
+                const existing = chains[step.currentBucketIndex];
+                if (!existing.some(n => n.id === id)) {
+                    chains[step.currentBucketIndex] = [{ id, name }, ...existing];
+                }
             }
         }
         return chains;
-    }, [hashMapData, currentStepIndex, bucketCount]);
+    }, [hashMapData, currentStepIndex, bucketCount, nodeMap]);
 
     const chainNodesForBucket = (bIndex: number): ChainNode[] => {
-        const ids = bucketChains[bIndex] || [];
-        return ids.map(id => ({ id, name: nodeMap.get(id) || `Node ${id}` }));
+        return bucketChains[bIndex] || [];
     };
+
+    const vizContainerRef = React.useRef<HTMLDivElement>(null);
+
+    // Auto-scroll to active bucket
+    useEffect(() => {
+        if (!hashMapData || !currentStep || !vizContainerRef.current) return;
+
+        let targetIndex = -1;
+        if (typeof currentStep.currentBucketIndex === 'number') {
+            targetIndex = currentStep.currentBucketIndex;
+        }
+
+        if (targetIndex !== -1) {
+            // Find the bucket element
+            const bucketElement = vizContainerRef.current.querySelector(`[aria-label="Bucket ${targetIndex}"]`) as HTMLElement;
+            if (bucketElement) {
+                // Scroll into view
+                bucketElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
+    }, [currentStepIndex, hashMapData, currentStep]);
+
 
     const calculateSearchTime = (comparisons: number): number => {
         const hashTime = 50;
@@ -172,9 +216,35 @@ const HashMapPage: React.FC<HashMapPageProps> = ({ onBack }) => {
         const asNumber = Number(parsedQuery);
         const isNumericSearch = !isNaN(asNumber) && parsedQuery === asNumber.toString();
 
+        let targetId: number | null = null;
+
+        // Step 1: Resolve Target ID and Bucket
         if (isNumericSearch) {
-            targetBucket = Math.abs(asNumber) % bucketCount;
+            // For numeric search, we assume the user entered an ID.
+            targetId = asNumber;
         } else {
+            // For string search, we first look up the ID associated with this name.
+            // This is crucial because our hash function is id % m.
+            // We can use nodeMap to find the ID.
+            // Since nodeMap is ID -> Name, we iterate.
+            for (const [id, name] of nodeMap.entries()) {
+                if (name.toLowerCase() === parsedQuery.toLowerCase()) {
+                    targetId = id;
+                    break;
+                }
+            }
+        }
+
+        // If we found an ID (either direct input or resolved from name), calculate bucket
+        if (targetId !== null) {
+            targetBucket = targetId % bucketCount;
+        } else {
+            // If we couldn't resolve a name to an ID, we can't efficiently find the bucket 
+            // with the hash function id % m. We might default to a naive hash 
+            // or just say not found immediately, but let's try the naive string hash 
+            // just in case they are searching for something hypothetically (though it won't be in the map)
+            // Actually, for this visualization, "Not Found" is the correct result if name doesn't exist.
+            // But let's check one bucket just to show the visualization "searching".
             let hash = 0;
             for (let i = 0; i < parsedQuery.length; i++) {
                 hash = ((hash << 5) - hash) + parsedQuery.charCodeAt(i);
@@ -183,18 +253,24 @@ const HashMapPage: React.FC<HashMapPageProps> = ({ onBack }) => {
             targetBucket = Math.abs(hash) % bucketCount;
         }
 
+        // Step 2: Search in that bucket
         const chainIds = bucketChains[targetBucket] || [];
 
         for (let i = 0; i < chainIds.length; i++) {
-            const nodeId = chainIds[i];
-            const nodeName = nodeMap.get(nodeId) || `Node ${nodeId}`;
+            const node = chainIds[i]; // node is {id, name} object now or number?? 
+            // Wait, bucketChains is ChainNode[][]. So 'node' is {id, name}.
+            const nodeId = node.id;
+            const nodeName = node.name;
             comparisons++;
 
             let match = false;
-            if (isNumericSearch) {
-                match = nodeId === asNumber;
-            } else {
-                match = nodeName.toLowerCase().includes(parsedQuery.toLowerCase());
+            // Compare against resolved target ID if we have one
+            if (targetId !== null) {
+                match = (nodeId === targetId);
+            }
+            // Fallback: compare name/string if we somehow didn't resolve ID (shouldn't happen for valid nodes)
+            else if (!isNumericSearch) {
+                match = nodeName.toLowerCase() === parsedQuery.toLowerCase();
             }
 
             if (match) {
@@ -202,6 +278,14 @@ const HashMapPage: React.FC<HashMapPageProps> = ({ onBack }) => {
                 foundNodeId = nodeId;
                 foundNodeName = nodeName;
                 break;
+            }
+        }
+
+        // Auto-scroll to search result bucket if found, or the checked bucket if not found
+        if (targetBucket !== null && vizContainerRef.current) {
+            const bucketElement = vizContainerRef.current.querySelector(`[aria-label="Bucket ${targetBucket}"]`) as HTMLElement;
+            if (bucketElement) {
+                bucketElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
         }
 
@@ -636,7 +720,7 @@ const HashMapPage: React.FC<HashMapPageProps> = ({ onBack }) => {
                         )}
                     </div>
 
-                    <div className="hashmap-visualization" style={{ alignItems: 'flex-end' }}>
+                    <div className="hashmap-visualization" ref={vizContainerRef} style={{ alignItems: 'flex-end' }}>
                         {buckets.map(index => {
                             const chainToDisplay = chainNodesForBucket(index);
                             const isCurrentBucket = currentStep?.currentBucketIndex === index;

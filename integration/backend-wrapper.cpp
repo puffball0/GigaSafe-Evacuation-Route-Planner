@@ -329,7 +329,10 @@
 #include <sstream>
 #include <algorithm>
 #include <map>
+#include <unordered_map>
 #include <vector>
+#include <cmath>
+#include <limits>
 #include "../backend/Graph.h"
 #include "../backend/algorithms/Dijkstra.h"
 #include "../backend/algorithms/BFS.h"
@@ -356,6 +359,26 @@ Graph getGraphByFloorId(int floorId) {
     }
 }
 
+// Helper function to check if a number is prime
+bool isPrime(int n) {
+    if (n <= 1) return false;
+    if (n <= 3) return true;
+    if (n % 2 == 0 || n % 3 == 0) return false;
+    for (int i = 5; i * i <= n; i = i + 6)
+        if (n % i == 0 || n % (i + 2) == 0)
+            return false;
+    return true;
+}
+
+// Helper function to find the next prime number >= n
+int findNextPrime(int n) {
+    if (n <= 1) return 2;
+    while (!isPrime(n)) {
+        n++;
+    }
+    return n;
+}
+
 // JSON output helper functions
 void outputGraphAsJSON(const Graph& graph) {
     std::cout << "{\n";
@@ -370,7 +393,7 @@ void outputGraphAsJSON(const Graph& graph) {
         std::cout << "      \"type\": \"" << n.type << "\",\n";
         std::cout << "      \"x\": " << n.x << ",\n";
         std::cout << "      \"y\": " << n.y << ",\n";
-        std::cout << "      \"floor\": " << n.floor << ",\n";
+        std::cout << "      \"floor\": " << n.z << ",\n";
         std::cout << "      \"isExit\": " << (n.isExit ? "true" : "false") << "\n";
         std::cout << "    }";
         if (i < nodes.size() - 1) std::cout << ",";
@@ -395,10 +418,10 @@ void outputGraphAsJSON(const Graph& graph) {
     std::cout << "}\n";
 }
 
-void outputHashMapStepsAsJSON(const std::vector<HashMapState>& steps, const Graph& graph) {
+void outputHashMapStepsAsJSON(const std::vector<HashMapState>& steps, const Graph& graph, int bucketCount) {
     std::cout << "{\n";
     std::cout << "  \"totalNodes\": " << graph.getNodes().size() << ",\n";
-    std::cout << "  \"bucketCount\": " << 10 << ",\n"; // Assuming a fixed 10 buckets as in HashMap.cpp
+    std::cout << "  \"bucketCount\": " << bucketCount << ",\n";
     std::cout << "  \"steps\": [\n";
 
     // Map Node IDs to names for easy lookup in the frontend
@@ -441,21 +464,26 @@ void outputAlgorithmStepsAsJSON(const std::vector<AlgorithmState>& states) {
     for (size_t i = 0; i < states.size(); ++i) {
         const auto& s = states[i];
         std::cout << "    {\n";
-        std::cout << "      \"stepId\": " << s.stepId << ",\n";
-        std::cout << "      \"currentNodeId\": " << s.currentNodeId << ",\n";
-        std::cout << "      \"currentDistance\": " << s.currentDistance << ",\n";
-        std::cout << "      \"newState\": [";
-        for (size_t j = 0; j < s.newState.size(); ++j) {
-            std::cout << s.newState[j];
-            if (j < s.newState.size() - 1) std::cout << ", ";
+        std::cout << "      \"currentNode\": " << s.currentNode << ",\n";
+        std::cout << "      \"exploringNode\": " << s.exploringNode << ",\n";
+        std::cout << "      \"activeEdge\": [" << s.activeEdge.first << ", " << s.activeEdge.second << "],\n";
+        
+        std::cout << "      \"queueState\": [";
+        for (size_t j = 0; j < s.queueState.size(); ++j) {
+            std::cout << s.queueState[j];
+            if (j < s.queueState.size() - 1) std::cout << ", ";
         }
         std::cout << "],\n";
+
         std::cout << "      \"visitedNodes\": [";
-        for (size_t j = 0; j < s.visitedNodes.size(); ++j) {
-            std::cout << s.visitedNodes[j];
-            if (j < s.visitedNodes.size() - 1) std::cout << ", ";
+        bool first = true;
+        for (const auto& nodeId : s.visitedNodes) {
+            if (!first) std::cout << ", ";
+            std::cout << nodeId;
+            first = false;
         }
         std::cout << "],\n";
+
         std::cout << "      \"message\": \"" << s.message << "\"\n";
         std::cout << "    }";
         if (i < states.size() - 1) std::cout << ",";
@@ -488,95 +516,77 @@ int main(int argc, char* argv[]) {
         int exitId = -1;
         
         // Find closest exit
-        std::map<int, int> parents;
-        if (algorithm == "dijkstra" || algorithm == "astar") {
-            int closestExitId = -1;
-            float minDistance = std::numeric_limits<float>::max();
-            
-            for (const auto& node : graph.getNodes()) {
-                if (node.isExit) {
-                    float dist;
-                    std::map<int, int> currentParents;
-                    if (algorithm == "dijkstra") {
-                        DijkstraResult result = dijkstra(graph, startNodeId, node.id);
-                        dist = result.distance;
-                        currentParents = result.parents;
-                    } else { // astar
-                        AStarResult result = astar(graph, startNodeId, node.id);
-                        dist = result.distance;
-                        currentParents = result.parents;
-                    }
-
-                    if (dist != -1 && dist < minDistance) {
-                        minDistance = dist;
-                        closestExitId = node.id;
-                        parents = currentParents;
-                    }
-                }
-            }
-            
-            if (closestExitId != -1) {
-                exitId = closestExitId;
-                distanceToExit = minDistance;
-                
-                // Reconstruct path
-                int current = exitId;
-                while (current != -1 && current != startNodeId) {
-                    path.push_back(current);
-                    current = parents[current];
-                }
-                path.push_back(startNodeId);
-                std::reverse(path.begin(), path.end());
-            }
-
-            // Re-run the algorithm to capture the states for visualization
-            if (exitId != -1) {
-                if (algorithm == "dijkstra") {
-                    DijkstraResult result = dijkstraWithStates(graph, startNodeId, exitId);
-                    states = result.states;
-                } else { // astar
-                    AStarResult result = astarWithStates(graph, startNodeId, exitId);
-                    states = result.states;
-                }
-            }
-
-        } else if (algorithm == "bfs") {
-            BFSResult result = bfsWithStates(graph, startNodeId);
-            states = result.states;
-
-            // BFS finds the *closest* exit in terms of number of edges (shortest path in unweighted graph)
-            int closestExitId = -1;
-            int minEdges = std::numeric_limits<int>::max();
-            for (const auto& node : graph.getNodes()) {
-                if (node.isExit) {
-                    int edges = 0;
-                    int current = node.id;
-                    while (current != -1 && current != startNodeId) {
-                        current = result.parents[current];
-                        edges++;
-                    }
-                    if (current == startNodeId && edges < minEdges) {
-                        minEdges = edges;
-                        closestExitId = node.id;
-                        parents = result.parents;
-                    }
-                }
-            }
-
-            if (closestExitId != -1) {
-                exitId = closestExitId;
-                distanceToExit = (float)minEdges; // Use edge count as 'distance' for BFS
-                
-                // Reconstruct path
-                int current = exitId;
-                while (current != -1 && current != startNodeId) {
-                    path.push_back(current);
-                    current = parents[current];
-                }
-                path.push_back(startNodeId);
-                std::reverse(path.begin(), path.end());
-            }
+        if (algorithm == "bfs") {
+            int dist;
+            exitId = findNearestExitBFS(graph, startNodeId, dist);
+            distanceToExit = static_cast<float>(dist);
+        } else if (algorithm == "dfs") {
+            int dist;
+            exitId = findNearestExitDFS(graph, startNodeId, dist);
+            distanceToExit = static_cast<float>(dist);
+        } else if (algorithm == "astar") {
+            exitId = findNearestExitAStar(graph, startNodeId, distanceToExit);
+        } else {
+             exitId = findNearestExit(graph, startNodeId, distanceToExit);
         }
+
+        if (exitId != -1) {
+            if (algorithm == "dijkstra") {
+                DijkstraResult result = dijkstraWithStates(graph, startNodeId, exitId);
+                states = result.states;
+                
+                 int current = exitId;
+                if (result.parents.find(current) != result.parents.end() || current == startNodeId) {
+                     while (current != -1 && current != startNodeId) {
+                        path.push_back(current);
+                        current = result.parents[current];
+                    }
+                    path.push_back(startNodeId);
+                    std::reverse(path.begin(), path.end());
+                }
+
+            } else if (algorithm == "bfs") {
+                BFSResult result = bfsWithStates(graph, startNodeId, exitId);
+                states = result.states;
+                
+                 int current = exitId;
+                 if (result.parents.find(current) != result.parents.end() || current == startNodeId) {
+                    while (current != -1 && current != startNodeId) {
+                        path.push_back(current);
+                        current = result.parents[current];
+                    }
+                    path.push_back(startNodeId);
+                    std::reverse(path.begin(), path.end());
+                }
+
+            } else if (algorithm == "dfs") {
+                DFSResult result = dfsWithStates(graph, startNodeId, exitId);
+                states = result.states;
+                 int current = exitId;
+                 if (result.parents.find(current) != result.parents.end() || current == startNodeId) {
+                    while (current != -1 && current != startNodeId) {
+                        path.push_back(current);
+                        current = result.parents[current];
+                    }
+                    path.push_back(startNodeId);
+                    std::reverse(path.begin(), path.end());
+                }
+
+            } else if (algorithm == "astar") {
+                AStarResult result = astarWithStates(graph, startNodeId, exitId);
+                states = result.states;
+                
+                 int current = exitId;
+                 if (result.parents.find(current) != result.parents.end() || current == startNodeId) {
+                    while (current != -1 && current != startNodeId) {
+                        path.push_back(current);
+                        current = result.parents[current];
+                    }
+                    path.push_back(startNodeId);
+                    std::reverse(path.begin(), path.end());
+                }
+            }
+        } 
         
         // Output JSON result
         std::cout << "{\n";
@@ -600,11 +610,17 @@ int main(int argc, char* argv[]) {
         int floorId = std::stoi(argv[2]);
         Graph graph = getGraphByFloorId(floorId);
         
+        // Calculate dynamic hash map size
+        int n = graph.getNodes().size();
+        // Constraint: n / m <= 0.7  =>  m >= n / 0.7
+        int min_m = static_cast<int>(std::ceil(n / 0.7));
+        int m = findNextPrime(min_m);
+
         // Simulate hash map insertion
-        GraphHashMap hashMap(10); // Use 10 buckets for visualization
+        GraphHashMap hashMap(m); 
         std::vector<HashMapState> steps = hashMap.simulateInsertion(graph.getNodes());
         
-        outputHashMapStepsAsJSON(steps, graph);
+        outputHashMapStepsAsJSON(steps, graph, m);
 
     } else {
         std::cerr << "Invalid command or arguments.\n";

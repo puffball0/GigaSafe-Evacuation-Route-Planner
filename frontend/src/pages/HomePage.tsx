@@ -179,7 +179,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             <button className="cta-button secondary" onClick={() => onNavigate('visualization')}>
               ALGORITHM VISUALIZATION
             </button>
-            <button className="cta-button primary" style={{ background: '#ff4081' }} onClick={() => onNavigate('hashmap')}>
+            <button className="cta-button secondary" onClick={() => onNavigate('hashmap')}>
               HASHMAP VISUALIZATION
             </button>
           </div>
