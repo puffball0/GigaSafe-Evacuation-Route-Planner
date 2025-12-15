@@ -6,8 +6,8 @@
 Open a terminal/Powershell and run:
 
 ```bash
-cd integration
 npm install   # run this only the first time
+cd integration
 npm start
 ```
 
@@ -18,4 +18,5 @@ Open another terminal/Powershell and run:
 cd frontend
 npm run dev
 ```
+
 
