@@ -1,18 +1,3 @@
-// #pragma once
-// #include <vector>
-// #include <string>
-
-// void visualizePath(
-//     const std::vector<int>& path,
-//     const std::string& algorithmName
-// );
-
-// void visualizeVisited(
-//     const std::vector<int>& visited,
-//     const std::string& algorithmName
-// );
-
-
 #pragma once
 #include <vector>
 #include <string>
