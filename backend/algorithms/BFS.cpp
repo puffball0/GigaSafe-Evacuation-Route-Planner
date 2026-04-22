@@ -9,12 +9,13 @@ BFSResult bfsWithStates(const Graph& graph, int source, int target) {
     std::unordered_map<int, int> dist;
     std::unordered_map<int, int> parent;
     
-    // Initialize all distances to -1 (unvisited)
+    // Initialize all nodes to -1 (unvisited)
     for (const auto& p : adj) {
         dist[p.first] = -1;
         parent[p.first] = -1;
     }
     
+    // Validate Source Node
     if (dist.find(source) == dist.end()) {
         return result; // invalid source
     }
